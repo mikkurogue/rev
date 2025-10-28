@@ -1,0 +1,8 @@
+/target
+
+# Ignore the .rev folder
+
+.rev/
+
+
+*.txt
