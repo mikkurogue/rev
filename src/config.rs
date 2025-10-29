@@ -29,14 +29,14 @@ impl Config {
 
         let author_name = config_file
             .lines()
-            .find(|line| line.starts_with("author.name = "))
+            .find(|line| line.starts_with("author_name = "))
             .and_then(|line| line.split(" = ").nth(1))
             .unwrap_or("Default")
             .to_string();
 
         let author_email = config_file
             .lines()
-            .find(|line| line.starts_with("author.email = "))
+            .find(|line| line.starts_with("author_email = "))
             .and_then(|line| line.split(" = ").nth(1))
             .unwrap_or("user@local")
             .to_string();
