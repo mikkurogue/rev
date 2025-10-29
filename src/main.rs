@@ -1,6 +1,7 @@
 use clap::{Parser, Subcommand};
 
 mod commands;
+mod config;
 mod vcs;
 
 #[derive(Parser)]
@@ -17,8 +18,8 @@ enum Commands {
     Track { path: String },
     /// Create a new revision with a message - similar to git commit
     Revise { message: String },
-    // /// Show the revision log for the current branch
-    // Log,
+    /// Show the revision log for the current branch
+    Log,
     // /// Create a new revision branch from the current revision branch
     // Branch {
     //     name: Option<String>,
@@ -38,6 +39,7 @@ fn main() -> anyhow::Result<()> {
 
     match cli.command {
         Commands::Init => commands::init::init_repo()?,
+        Commands::Log => commands::log::show_log()?,
         Commands::Track { path } => commands::track::track_file(&path)?,
         Commands::Revise { message } => commands::revise::revise(&message)?,
         _ => println!("Command not implemented yet"),

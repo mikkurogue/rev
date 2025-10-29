@@ -3,6 +3,7 @@ use sha1::{Digest, Sha1};
 use std::fs;
 use std::io::Write;
 
+use crate::commands::revise::Revision;
 use crate::vcs::repo::Repo;
 
 fn hash_bytes(data: &[u8]) -> String {
@@ -32,6 +33,20 @@ pub fn store_tree(repo: &Repo, data: &str) -> Result<String> {
     store_object(repo, data.as_bytes())
 }
 
-pub fn store_revision(repo: &Repo, data: &str) -> Result<String> {
+pub fn store_revision(repo: &Repo, revision: Revision) -> Result<String> {
+    let data = format!(
+        "type=revision\n\
+         tree_hash={}\n\
+         parent={}\n\
+         author={}\n\
+         date={}\n\
+         message={}\n",
+        revision.tree_hash,
+        revision.parent.unwrap_or_default(),
+        revision.author,
+        revision.date,
+        revision.message
+    );
+
     store_object(repo, data.as_bytes())
 }
